@@ -1,0 +1,33 @@
+
+service: serverless-2024-prova
+frameworkVersion: "3"
+
+provider:
+  name: AWS
+  runtime: nodejs20.x
+  region: us-east-1
+  iam:
+    role: arn:aws:iam::730335289907:role/LabRole
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - httpApi:
+          path: /hello
+          method: get
+  goodbye:
+    handler: src/handler.goodbye
+    events:
+      - httpApi:
+          path: /goodbye
+          method: get
+  getAllPatients:
+    handler: src/handler.getAllPatients
+    events:
+      - httpApi:
+          path: /getAllPatients
+          method: get
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
