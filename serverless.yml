@@ -8,6 +8,13 @@ provider:
   region: us-east-1
   iam:
     role: arn:aws:iam::730335289907:role/LabRole
+  environment:
+    DB_HOST: uf12-rds.cjucue2iqbwc.us-east-1.rds.amazonaws.com
+    DB_USER: admin
+    DB_PASSWORD: m3J5HAVaiF
+    DB_PORT: 3306
+    DB_NAME: AFP2024_Rocchio
+
 
 functions:
   hello:

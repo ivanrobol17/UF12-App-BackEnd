@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllPatients = exports.goodbye = exports.hello = void 0;
+const promise_1 = require("mysql2/promise");
 const hello = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log("hello world!");
     return "hello world!";
@@ -21,14 +22,31 @@ const goodbye = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.goodbye = goodbye;
 const getAllPatients = () => __awaiter(void 0, void 0, void 0, function* () {
-    const responce = {
-        statusCode: 200,
-        body: JSON.stringify({
-            nome: "zuzu",
-            cognome: "bambol",
-            dataNascita: "06/03/2002"
-        })
-    };
-    return responce;
+    try {
+        const dbConnection = yield (0, promise_1.createConnection)({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+            port: parseInt(process.env.DB_PORT || '3306')
+        });
+        const [rows] = yield dbConnection.query("SELECT * FROM Paziente");
+        yield dbConnection.end();
+        console.table(rows);
+        const responce = {
+            statusCode: 200,
+            body: JSON.stringify(rows)
+        };
+        return responce;
+    }
+    catch (error) {
+        const responce = {
+            statusCode: 500,
+            body: JSON.stringify({
+                message: error
+            })
+        };
+        return responce;
+    }
 });
 exports.getAllPatients = getAllPatients;
