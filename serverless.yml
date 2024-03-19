@@ -35,6 +35,12 @@ functions:
       - httpApi:
           path: /getAllPatients
           method: get
+  getPazientiById:
+    handler: src/handler.getPazientiById
+    events:
+      - httpApi:
+          path: /getPazientiById/{id}
+          method: get
 plugins:
   - serverless-offline
   - serverless-plugin-typescript
