@@ -1,7 +1,7 @@
 import { APIGatewayProxyResult, APIGatewayProxyEvent } from "aws-lambda";
 import { createConnection } from "mysql2/promise";
-import { json } from "stream/consumers";
 import { IntPaziente } from "./models/IntPaziente";
+import { error } from "console";
 
 
 const getDbConnection = async () => {
@@ -18,7 +18,7 @@ const getDbConnection = async () => {
 export const getAllPazienti = async (): Promise<APIGatewayProxyResult> => {
     try {
         const dbConnection = await getDbConnection();
-        const [rows] = await dbConnection.query("SELECT * FROM Pazienti");
+        const [rows] = await dbConnection.query("SELECT * FROM Paziente");
         await dbConnection.end();
 
         const response: APIGatewayProxyResult = {
@@ -53,7 +53,7 @@ export const getPazientiById = async (event: APIGatewayProxyEvent): Promise<APIG
         }
         const dbConnection = await getDbConnection();
 
-        const [rows] = await dbConnection.query("SELECT * FROM Pazienti WHERE id=?", [event.pathParameters?.id]);
+        const [rows] = await dbConnection.query("SELECT * FROM Paziente WHERE id=?", [event.pathParameters?.id]);
         await dbConnection.end();
 
         const response: APIGatewayProxyResult = {
@@ -85,14 +85,10 @@ export const CreatePaziente = async (event: APIGatewayProxyEvent): Promise<APIGa
         const dbConnection = await getDbConnection();
         const [rows] = await dbConnection.query("insert into Paziente SET ?", [paziente] );
         await dbConnection.end();
-
+        console.log("test")
         const response: APIGatewayProxyResult = {
             statusCode: 200,
-            headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": true,
-            },
-            body: JSON.stringify(rows),
+            body: "inserimento avvenuto con successo"
         };
       return response;
     } catch (error) {

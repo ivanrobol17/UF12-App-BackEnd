@@ -17,30 +17,36 @@ provider:
 
 
 functions:
-  hello:
-    handler: src/handler.hello
-    events:
-      - httpApi:
-          path: /hello
-          method: get
-  goodbye:
-    handler: src/handler.goodbye
-    events:
-      - httpApi:
-          path: /goodbye
-          method: get
   getAllPatients:
-    handler: src/handler.getAllPatients
+    handler: src/ospedale.getAllPatients
     events:
       - httpApi:
           path: /getAllPatients
           method: get
   getPazientiById:
-    handler: src/handler.getPazientiById
+    handler: src/ospedale.getPazientiById
     events:
       - httpApi:
           path: /getPazientiById/{id}
           method: get
+  CreatePaziente:
+    handler: src/ospedale.CreatePaziente
+    events:
+      - httpApi:
+          path: /CreatePaziente
+          method: post
+  UpdatePaziente:
+    handler: src/ospedale.UpdatePaziente
+    events:
+      - httpApi:
+          path: /UpdatePaziente/{id}
+          method: post
+  DeletePazienti:
+    handler: src/ospedale.DeletePazienti
+    events:
+      - httpApi:
+          path: /DeletePazienti/{id}
+          method: delete
 plugins:
   - serverless-offline
   - serverless-plugin-typescript

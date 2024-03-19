@@ -23,7 +23,7 @@ const getDbConnection = () => __awaiter(void 0, void 0, void 0, function* () {
 const getAllPazienti = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dbConnection = yield getDbConnection();
-        const [rows] = yield dbConnection.query("SELECT * FROM Pazienti");
+        const [rows] = yield dbConnection.query("SELECT * FROM Paziente");
         yield dbConnection.end();
         const response = {
             statusCode: 200,
@@ -57,7 +57,7 @@ const getPazientiById = (event) => __awaiter(void 0, void 0, void 0, function* (
             throw new Error("Missing id parameter in the URL");
         }
         const dbConnection = yield getDbConnection();
-        const [rows] = yield dbConnection.query("SELECT * FROM Pazienti WHERE id=?", [(_b = event.pathParameters) === null || _b === void 0 ? void 0 : _b.id]);
+        const [rows] = yield dbConnection.query("SELECT * FROM Paziente WHERE id=?", [(_b = event.pathParameters) === null || _b === void 0 ? void 0 : _b.id]);
         yield dbConnection.end();
         const response = {
             statusCode: 200,
@@ -89,13 +89,10 @@ const CreatePaziente = (event) => __awaiter(void 0, void 0, void 0, function* ()
         const dbConnection = yield getDbConnection();
         const [rows] = yield dbConnection.query("insert into Paziente SET ?", [paziente]);
         yield dbConnection.end();
+        console.log("test");
         const response = {
             statusCode: 200,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": true,
-            },
-            body: JSON.stringify(rows),
+            body: "inserimento avvenuto con successo"
         };
         return response;
     }
