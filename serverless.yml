@@ -7,7 +7,7 @@ provider:
   runtime: nodejs20.x
   region: us-east-1
   iam:
-    role: arn:aws:iam::730335289907:role/LabRole
+    role: arn:aws:iam::058264440436:role/LabRole
   environment:
     DB_HOST: uf12-rds.cjucue2iqbwc.us-east-1.rds.amazonaws.com
     DB_USER: admin
