@@ -45,6 +45,36 @@ export const getAllPazienti = async (): Promise<APIGatewayProxyResult> => {
     }
 };
 
+export const getPazientiNonDimessi = async (): Promise<APIGatewayProxyResult> => {
+  try {
+      const dbConnection = await getDbConnection();
+      const [rows] = await dbConnection.query("SELECT * FROM Paziente WHERE Stato!=-1");
+      await dbConnection.end();
+
+      const response: APIGatewayProxyResult = {
+          statusCode: 200,
+          headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify(rows),
+      };
+    return response;
+  } catch (error) {
+    return {
+      statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        message: "Error creating database connection",
+        error: error,
+      }),
+    };
+  }
+};
+
 // localhost:8080/pazienti/id
 export const getPazientiById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {

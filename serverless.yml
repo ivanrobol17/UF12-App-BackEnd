@@ -1,5 +1,6 @@
 service: serverless-2024-prova
 frameworkVersion: "3"
+configValidationMode: warn
 
 provider:
   name: aws
@@ -23,7 +24,13 @@ functions:
       - httpApi:
           path: /getAllPazienti
           method: get
-          cors: true
+
+  getPazientiNonDimessi:
+    handler: src/ospedale.getPazientiNonDimessi
+    events:
+      - httpApi:
+          path: /getPazientiNonDimessi
+          method: get
     
   getPazientiById:
     handler: src/ospedale.getPazientiById
@@ -31,7 +38,6 @@ functions:
       - httpApi:
           path: /getPazientiById/{id}
           method: get
-          cors: true
 
   CreatePaziente:
     handler: src/ospedale.CreatePaziente
@@ -39,7 +45,6 @@ functions:
       - httpApi:
           path: /CreatePaziente
           method: post
-          cors: true
 
   UpdatePaziente:
     handler: src/ospedale.UpdatePaziente
@@ -47,7 +52,6 @@ functions:
       - httpApi:
           path: /UpdatePaziente/{id}
           method: put
-          cors: true
 
   DeletePazienti:
     handler: src/ospedale.DeletePazienti
@@ -55,7 +59,6 @@ functions:
       - httpApi:
           path: /DeletePazienti/{id}
           method: delete
-          cors: true
 
 plugins:
   - serverless-offline
