@@ -1,13 +1,13 @@
 export interface IntPaziente{
-    id: number;
-    nome: string;
-    cognome: string;
-    datanascita: Date;
-    medico: string;
-    codiceColore: TCodColore;
-    stato: TStato;
-    arrivo: TArrivo;
-    codicePaziente: TCodPaziente;
+    Id: number;
+    Nome: string;
+    Cognome: string;
+    DataNascita: Date;
+    Medico: string;
+    CodiceColore: TCodColore;
+    Stato: TStato;
+    Arrivo: TArrivo;
+    CodicePaziente: TCodPaziente;
 }
 export type TCodColore = "rosso" | "arancio" | "blu" |  "verde" | "bianco"
 export type TStato = 

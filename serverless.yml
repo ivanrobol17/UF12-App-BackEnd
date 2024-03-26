@@ -1,4 +1,3 @@
-
 service: serverless-2024-prova
 frameworkVersion: "3"
 
@@ -8,45 +7,56 @@ provider:
   region: us-east-1
   iam:
     role: arn:aws:iam::058264440436:role/LabRole
+  
   environment:
-    DB_HOST: uf12-rds.cjucue2iqbwc.us-east-1.rds.amazonaws.com
-    DB_USER: admin
-    DB_PASSWORD: m3J5HAVaiF
-    DB_PORT: 3306
+    DB_HOST: uf12-rds.cjucue2iqbwc.us-east-1.rds.amazonaws.com    
+    DB_USER: admin    
+    DB_PASSWORD: m3J5HAVaiF    
+    DB_PORT: 3306    
     DB_NAME: AFP2024_Rocchio
 
-
 functions:
+
   getAllPazienti:
     handler: src/ospedale.getAllPazienti
     events:
       - httpApi:
           path: /getAllPazienti
           method: get
+          cors: true
+    
   getPazientiById:
     handler: src/ospedale.getPazientiById
     events:
       - httpApi:
           path: /getPazientiById/{id}
           method: get
+          cors: true
+
   CreatePaziente:
     handler: src/ospedale.CreatePaziente
     events:
       - httpApi:
           path: /CreatePaziente
           method: post
+          cors: true
+
   UpdatePaziente:
     handler: src/ospedale.UpdatePaziente
     events:
       - httpApi:
           path: /UpdatePaziente/{id}
-          method: post
+          method: put
+          cors: true
+
   DeletePazienti:
     handler: src/ospedale.DeletePazienti
     events:
       - httpApi:
           path: /DeletePazienti/{id}
           method: delete
+          cors: true
+
 plugins:
   - serverless-offline
   - serverless-plugin-typescript

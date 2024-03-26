@@ -146,7 +146,7 @@ export const DeletePazienti = async (event: APIGatewayProxyEvent): Promise<APIGa
         }
         const dbConnection = await getDbConnection();
 
-        const [rows] = await dbConnection.query("UPDATE  Paziente SET stato=-1 WHERE id = ?", [event.pathParameters?.id]);
+        const [rows] = await dbConnection.query("DELETE FROM Paziente WHERE id = ?", [event.pathParameters?.id]);
         await dbConnection.end();
 
         const response: APIGatewayProxyResult = {
