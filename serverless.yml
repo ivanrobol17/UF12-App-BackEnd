@@ -3,7 +3,7 @@ service: serverless-2024-prova
 frameworkVersion: "3"
 
 provider:
-  name: AWS
+  name: aws
   runtime: nodejs20.x
   region: us-east-1
   iam:
@@ -17,11 +17,11 @@ provider:
 
 
 functions:
-  getAllPatients:
-    handler: src/ospedale.getAllPatients
+  getAllPazienti:
+    handler: src/ospedale.getAllPazienti
     events:
       - httpApi:
-          path: /getAllPatients
+          path: /getAllPazienti
           method: get
   getPazientiById:
     handler: src/ospedale.getPazientiById
