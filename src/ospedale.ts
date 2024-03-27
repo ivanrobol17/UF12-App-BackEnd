@@ -48,7 +48,7 @@ export const getAllPazienti = async (): Promise<APIGatewayProxyResult> => {
 export const getPazientiNonDimessi = async (): Promise<APIGatewayProxyResult> => {
   try {
       const dbConnection = await getDbConnection();
-      const [rows] = await dbConnection.query("SELECT * FROM Paziente WHERE Stato!=3");
+      const [rows] = await dbConnection.query("SELECT * FROM Paziente where Stato!=3 ORDER BY CASE CodiceColore WHEN 'Rosso' THEN 1 WHEN 'Arancio' THEN 2 WHEN 'Blu' THEN 3 WHEN 'Verde' THEN 4 ELSE 5 END;");
       await dbConnection.end();
 
       const response: APIGatewayProxyResult = {
