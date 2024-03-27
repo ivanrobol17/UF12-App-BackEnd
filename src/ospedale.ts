@@ -48,7 +48,7 @@ export const getAllPazienti = async (): Promise<APIGatewayProxyResult> => {
 export const getPazientiNonDimessi = async (): Promise<APIGatewayProxyResult> => {
   try {
       const dbConnection = await getDbConnection();
-      const [rows] = await dbConnection.query("SELECT * FROM Paziente WHERE Stato!=-1");
+      const [rows] = await dbConnection.query("SELECT * FROM Paziente WHERE Stato!=3");
       await dbConnection.end();
 
       const response: APIGatewayProxyResult = {
@@ -176,7 +176,7 @@ export const DeletePazienti = async (event: APIGatewayProxyEvent): Promise<APIGa
         }
         const dbConnection = await getDbConnection();
 
-        const [rows] = await dbConnection.query("DELETE FROM Paziente WHERE id = ?", [event.pathParameters?.id]);
+        const [rows] = await dbConnection.query("UPDATE Paziente SET Stato=3 WHERE id = ?", [event.pathParameters?.id]);
         await dbConnection.end();
 
         const response: APIGatewayProxyResult = {
