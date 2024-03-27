@@ -31,7 +31,14 @@ functions:
       - httpApi:
           path: /getPazientiNonDimessi
           method: get
-    
+  
+  getContatoriCuraAttesa:
+    handler: src/ospedale.getContatoriCuraAttesa
+    events:
+      - httpApi:
+          path: /getContatoriCuraAttesa
+          method: get
+      
   getPazientiById:
     handler: src/ospedale.getPazientiById
     events:
