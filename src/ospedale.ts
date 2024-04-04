@@ -106,6 +106,66 @@ export const getPazientiNonDimessi = async (): Promise<APIGatewayProxyResult> =>
   }
 };
 
+export const getPersone = async (): Promise<APIGatewayProxyResult> => {
+  try {
+      const dbConnection = await getDbConnection();
+      const [rows] = await dbConnection.query("SELECT * FROM Persone;");
+      await dbConnection.end();
+
+      const response: APIGatewayProxyResult = {
+          statusCode: 200,
+          headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify(rows),
+      };
+    return response;
+  } catch (error) {
+    return {
+      statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        message: "Error creating database connection",
+        error: error,
+      }),
+    };
+  }
+};
+
+export const getStati = async (): Promise<APIGatewayProxyResult> => {
+  try {
+      const dbConnection = await getDbConnection();
+      const [rows] = await dbConnection.query("SELECT * FROM Stati;");
+      await dbConnection.end();
+
+      const response: APIGatewayProxyResult = {
+          statusCode: 200,
+          headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify(rows),
+      };
+    return response;
+  } catch (error) {
+    return {
+      statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+      body: JSON.stringify({
+        message: "Error creating database connection",
+        error: error,
+      }),
+    };
+  }
+};
+
 // localhost:8080/pazienti/id
 export const getPazientiById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
