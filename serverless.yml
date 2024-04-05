@@ -16,6 +16,9 @@ provider:
     DB_PORT: 3306    
     DB_NAME: Ospedale
 
+  # httpApi:
+  #   cors: true
+
 functions:
 
   getAllPazienti:
@@ -44,6 +47,13 @@ functions:
     events:
       - httpApi:
           path: /getStati
+          method: get
+
+  ricercaPersone:
+    handler: src/ospedale.ricercaPersone
+    events:
+      - httpApi:
+          path: /ricercaPersone
           method: get
 
   getContatoriCuraAttesa:

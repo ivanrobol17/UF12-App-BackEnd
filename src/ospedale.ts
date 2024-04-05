@@ -2,6 +2,7 @@ import { APIGatewayProxyResult, APIGatewayProxyEvent } from "aws-lambda";
 import { createConnection } from "mysql2/promise";
 import { IntPaziente } from "./models/IntPaziente";
 import { error } from "console";
+import { RicercaPersona } from "./models/ricercaPersona";
 
 
 const getDbConnection = async () => {
@@ -225,6 +226,36 @@ export const CreatePaziente = async (event: APIGatewayProxyEvent): Promise<APIGa
         }),
       };
     }
+};
+
+export const ricercaPersone = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  try {
+    if (!event.body){
+      throw new Error ("Missing request BODY")
+    }
+    const dbConnection = await getDbConnection();
+    const ricercaPersona: Partial<RicercaPersona> = JSON.parse(event.body)
+    const [rows] = await dbConnection.query("SELECT * FROM Persone WHERE ?", [ricercaPersona]);
+    await dbConnection.end();
+
+    const response: APIGatewayProxyResult = {
+        statusCode: 200,
+        body: JSON.stringify(rows),
+    };
+    return response;
+} catch (error) {
+  return {
+    statusCode: 500,
+    headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({
+    message: "Error creating database connection, ",
+    error: error,
+    }),
+  };
+}
 };
 
 export const UpdatePaziente = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {

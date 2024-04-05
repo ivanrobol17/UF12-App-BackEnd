@@ -14,7 +14,8 @@ CREATE TABLE Persone(
     Citta varchar(50),
     Via varchar(50),
     NumCivico varchar(50),
-    CAP char(5)
+    CAP char(5),
+    Sesso char(1)
 );
 
 DROP TABLE IF EXISTS Medici;
